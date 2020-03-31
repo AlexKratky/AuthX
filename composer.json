@@ -11,13 +11,20 @@
     ],
     "require": {
         "php": ">=7.0",
-        "alexkratky/url": "^0.2.0",
-        "alexkratky/routex": "^0.2.0",
-        "alexkratky/db": "^0.1.0",
-        "alexkratky/requestx": "^0.1.0",
+        "alexkratky/routex": "^0.5.0",
+        "alexkratky/db": "^0.3.0",
+        "alexkratky/requestx": "^0.2.0",
+        "alexkratky/panx-utils": "^0.1.0",
+        "alexkratky/mail": "^0.1.0",
         "pragmarx/google2fa-qrcode": "^1.0"
     },
     "autoload": {
-        "files": ["src/Auth.php", "src/AuthModel.php"]
+        "files": [
+            "src/MissingRecaptchaSecretException.php",
+            "src/AuthModel.php",
+            "src/AuthValidator.php",
+            "src/User.php",
+            "src/Auth.php"
+        ]
     }
 }
