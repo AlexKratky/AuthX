@@ -12,7 +12,7 @@
     "require": {
         "php": ">=7.0",
         "alexkratky/routex": "^0.5.0",
-        "alexkratky/db": "^0.3.0",
+        "alexkratky/db": "^0.2.0",
         "alexkratky/requestx": "^0.2.0",
         "alexkratky/panx-utils": "^0.1.0",
         "alexkratky/mail": "^0.1.0",
