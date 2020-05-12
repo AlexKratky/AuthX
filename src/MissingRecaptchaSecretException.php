@@ -1,4 +1,15 @@
 <?php
+/**
+ * @name MissingRecaptchaSecretException.php
+ * @link https://alexkratky.com                         Author website
+ * @link https://panx.eu/docs/                          Documentation
+ * @link https://github.com/AlexKratky/AuthX/           Github Repository
+ * @author Alex Kratky <alex@panx.dev>
+ * @copyright Copyright (c) 2020 Alex Kratky
+ * @license http://opensource.org/licenses/mit-license.php MIT License
+ * @description MissingRecaptchaSecretException.
+ */
+
 namespace AlexKratky;
 
 class MissingRecaptchaSecretException extends \Exception

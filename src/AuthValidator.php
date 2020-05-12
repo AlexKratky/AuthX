@@ -1,4 +1,14 @@
 <?php
+/**
+ * @name AuthValidator.php
+ * @link https://alexkratky.com                         Author website
+ * @link https://panx.eu/docs/                          Documentation
+ * @link https://github.com/AlexKratky/AuthX/           Github Repository
+ * @author Alex Kratky <alex@panx.dev>
+ * @copyright Copyright (c) 2020 Alex Kratky
+ * @license http://opensource.org/licenses/mit-license.php MIT License
+ * @description Validates users' input.
+ */
 
 declare (strict_types = 1);
 
@@ -14,11 +24,19 @@ class AuthValidator {
      * @var AuthModel
      */
     protected $authModel;
-    protected $recaptchaEnabled = true;
-    protected $recaptchaSecret = null;
+    protected static $recaptchaEnabled = true;
+    protected static $recaptchaSecret = null;
 
     public function __construct() {
         $this->authModel = new AuthModel();
+    }
+
+    public static function enableRecaptcha($recaptcha = true) {
+        self::$recaptchaEnabled = $recaptcha;
+    }
+
+    public static function setRecaptchaSecret($secret) {
+        self::$recaptchaSecret = $secret;
     }
 
     /**
@@ -27,17 +45,17 @@ class AuthValidator {
      * @return bool Returns true if the recaptcha is valid, false otherwise.
      */
     public function validRecaptcha(?string $token): bool {
-        if($this->recaptchaEnabled === false || $this->isCaptchaNeeded() === false) {
+        if(self::$recaptchaEnabled === false || $this->isCaptchaNeeded() === false) {
             return true;
         }
-        if($this->recaptchaSecret === null) throw new MissingRecaptchaSecretException();
+        if(self::$recaptchaSecret === null) throw new MissingRecaptchaSecretException();
         $client = new GuzzleHttp\Client();
 
         $response = $client->post(
             'https://www.google.com/recaptcha/api/siteverify',
             ['form_params' =>
                 [
-                    'secret' => $this->recaptchaSecret,
+                    'secret' => self::$recaptchaSecret,
                     'response' => $token,
                 ],
             ]

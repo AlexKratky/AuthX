@@ -1,11 +1,11 @@
 <?php
 /**
  * @name Auth.php
- * @link https://alexkratky.cz                          Author website
+ * @link https://alexkratky.com                         Author website
  * @link https://panx.eu/docs/                          Documentation
- * @link https://github.com/AlexKratky/panx-framework/  Github Repository
- * @author Alex Kratky <info@alexkratky.cz>
- * @copyright Copyright (c) 2019 Alex Kratky
+ * @link https://github.com/AlexKratky/AuthX/           Github Repository
+ * @author Alex Kratky <alex@panx.dev>
+ * @copyright Copyright (c) 2020 Alex Kratky
  * @license http://opensource.org/licenses/mit-license.php MIT License
  * @description Class to authentification users. Part of panx-framework.
  */
@@ -38,14 +38,15 @@ class Auth extends AuthValidator {
      * @var PragmaRX\Google2FAQRCode\Google2FA
      */
     private $twoFA;
+    private $appName;
 
     /**
      * @var User
      */
     private $user;
 
-    protected $recaptchaEnabled = true;
-    protected $recaptchaSecret = null;
+    protected static $recaptchaEnabled = true;
+    protected static $recaptchaSecret = null;
 
     /**
      * Create a instance of Auth.
@@ -55,6 +56,7 @@ class Auth extends AuthValidator {
         $this->request = $GLOBALS["request"] ?? new Request();
         $this->authModel = new AuthModel();
         $this->twoFA = new PragmaRX\Google2FAQRCode\Google2FA();
+        $this->appName = $GLOBALS["CONFIG"]["basic"]["APP_NAME"] ?? 'Auth';
         $this->user = $user;
         if(!$logout) {
             if(!empty($_SESSION["username"]) && !empty($_SESSION["password"])) {
@@ -169,7 +171,7 @@ class Auth extends AuthValidator {
         }
 
         $url = $this->twoFA->getQRCodeInline(
-            $GLOBALS["CONFIG"]["basic"]["APP_NAME"],
+            $this->appName,
             $this->username,
             $secret
         );
